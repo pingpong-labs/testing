@@ -12,12 +12,13 @@
     ],
     "autoload": {
         "psr-4": {
+            "App\\": "fixture/app",
             "Pingpong\\Testing\\": "src/Pingpong/Testing"
         }
     },
     "require": {
         "php": ">=5.4.0",
-        "laravel/framework": "~4|~5"
+        "laravel/framework": "5.0.x@dev"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

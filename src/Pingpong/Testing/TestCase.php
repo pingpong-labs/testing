@@ -20,37 +20,24 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase {
      */
     public function createApplication()
     {
-        $app = new Application;
+        $app = new Application(realpath(__DIR__.'/../../fixture/'));
 
-        $app->detectEnvironment(array(
-            'local' => array('your-machine-name'),
-        ));
+        $app->singleton(
+            'Illuminate\Contracts\Http\Kernel',
+            'App\Http\Kernel'
+        );
 
-        $app->bindInstallPaths($this->getApplicationPaths());
+        $app->singleton(
+            'Illuminate\Contracts\Console\Kernel',
+            'App\Console\Kernel'
+        );
 
-        $app['env'] = 'testing';
+        $app->singleton(
+            'Illuminate\Contracts\Debug\ExceptionHandler',
+            'App\Exceptions\Handler'
+        );
 
-        $app->instance('app', $app);
-
-        Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($app);
-
-        $app->registerCoreContainerAliases();
-
-        with($envVariables = new EnvironmentVariables($app->getEnvironmentVariablesLoader()))->load($app['env']);
-
-        $app->instance('config', $config = new Repository($app->getConfigLoader(), $app['env']));
-        $app->startExceptionHandling();
-
-        date_default_timezone_set($this->getApplicationTimezone());
-
-        $aliases = array_merge($this->getApplicationAliases(), $this->getPackageAliases());
-        AliasLoader::getInstance($aliases)->register();
-
-        Request::enableHttpMethodParameterOverride();
-
-        $providers = array_merge($this->getApplicationProviders(), $this->getPackageProviders());
-        $app->getProviderRepository()->load($app, $providers);
+        $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
         $this->registerBootedCallback($app);
 
