@@ -24,4 +24,9 @@ class TestingTest extends \Pingpong\Testing\TestCase {
 		$this->visit('/')
 		     ->see('Laravel 5');
 	}
+
+	public function registerBootedCallback($app)
+	{
+		require $app['path'] . '/Http/routes.php';
+	}
 }
