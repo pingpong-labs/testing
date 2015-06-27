@@ -224,8 +224,6 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
     protected function bootstrap(Application $app)
     {
         $bootstrappers = [
-            'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-            'Illuminate\Foundation\Bootstrap\LoadConfiguration',
             'Illuminate\Foundation\Bootstrap\ConfigureLogging',
             'Illuminate\Foundation\Bootstrap\HandleExceptions',
             'Illuminate\Foundation\Bootstrap\RegisterFacades',
